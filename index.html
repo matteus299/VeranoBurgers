@@ -970,12 +970,7 @@ document.getElementById('backToCart').addEventListener('click', () => {
 });
 
 // ---------- mostrar campo de troco só se pagamento = dinheiro ----------
-const trocoField = document.getElementById('trocoField');
-document.querySelectorAll('input[name="pagamento"]').forEach((radio) => {
-  radio.addEventListener('change', (e) => {
-    trocoField.style.display = e.target.value === 'Dinheiro' ? 'flex' : 'none';
-  });
-});
+
 
    
 // ---------- montar mensagem e enviar pro WhatsApp ----------
@@ -986,16 +981,16 @@ document.getElementById('checkoutForm').addEventListener('submit', (e) => {
   const nome = data.get('nome').trim();
   const telefone = data.get('telefone').trim();
   const rua = data.get('rua').trim();
+  const numero = data.get('numero').trim();
   const bairro = data.get('bairro').trim();
   const complemento = data.get('complemento').trim();
   const referencia = data.get('referencia').trim();
   const pagamento = data.get('pagamento');
-  const troco = data.get('troco').trim();
   const observacoes = data.get('observacoes').trim();
 
-  const pedidoNum = Math.floor(10000 + Math.random() * 90000); // número aleatório de 5 dígitos
+  const pedidoNum = Math.floor(10000 + Math.random() * 90000);
 
-  let endereco = `${rua} - ${bairro}`;
+  let endereco = `${rua}, Nº ${numero} - ${bairro}`;
   if (complemento) endereco += `, ${complemento}`;
   if (referencia) endereco += ` (${referencia})`;
 
@@ -1013,7 +1008,7 @@ document.getElementById('checkoutForm').addEventListener('submit', (e) => {
     linhas.push(`Observação: (*${observacoes}*)`);
     linhas.push('');
   }
-  linhas.push(`💳 *${pagamento}*${pagamento === 'Dinheiro' && troco ? ` (troco para ${troco})` : ''}`);
+  linhas.push(`💳 *${pagamento}*`);
   linhas.push('');
   linhas.push(`🛵 *Delivery*`);
   linhas.push(`🏠 ${endereco}`);
