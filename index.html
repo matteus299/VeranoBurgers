@@ -317,7 +317,8 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
   background: rgba(0,0,0,0.6);
   z-index: 40;
 }
-.sheet {
+
+   .sheet {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 50;
@@ -327,12 +328,15 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
   border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 22px 22px 0 0;
+  height: 88vh;                 /* altura fixa */
   max-height: 88vh;
   display: flex;
   flex-direction: column;
   padding: 10px 18px calc(20px + var(--safe-bottom));
   box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+  overflow: hidden;             /* impede que a sheet cresça */
 }
+   
 .sheet-handle {
   width: 40px; height: 4px;
   background: var(--border);
@@ -746,10 +750,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
       <input type="tel" name="telefone" required placeholder="(92) 9 9999-9999">
     </label>
 
-    <div class="form-row">
+        <div class="form-row">
       <label class="grow">
-        Endereço
-        <input type="text" name="rua" required placeholder="Rua, número">
+        Rua
+        <input type="text" name="rua" required placeholder="Nome da rua">
+      </label>
+      <label style="max-width: 110px;">
+        Número
+        <input type="text" name="numero" required placeholder="Nº">
       </label>
     </div>
 
