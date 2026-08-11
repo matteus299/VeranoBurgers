@@ -967,6 +967,7 @@ document.querySelectorAll('input[name="pagamento"]').forEach((radio) => {
   });
 });
 
+   
 // ---------- montar mensagem e enviar pro WhatsApp ----------
 document.getElementById('checkoutForm').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -982,29 +983,39 @@ document.getElementById('checkoutForm').addEventListener('submit', (e) => {
   const troco = data.get('troco').trim();
   const observacoes = data.get('observacoes').trim();
 
+  const pedidoNum = Math.floor(10000 + Math.random() * 90000); // número aleatório de 5 dígitos
+
+  let endereco = `${rua} - ${bairro}`;
+  if (complemento) endereco += `, ${complemento}`;
+  if (referencia) endereco += ` (${referencia})`;
+
   const linhas = [];
-  linhas.push('🍔 *NOVO PEDIDO — VERANO BURGERS*');
+  linhas.push(`${nome}, seu pedido Nº ${pedidoNum} está em análise, assim que estiver em produção, pode deixar que te aviso.`);
   linhas.push('');
-  linhas.push('*Itens:*');
+  linhas.push(`Pedido *nº ${pedidoNum}*`);
+  linhas.push('');
+  linhas.push(`*Itens:*`);
   Object.values(cart).forEach((item) => {
-    linhas.push(`• ${item.qty}x ${item.name} — ${money(item.price * item.qty)}`);
+    linhas.push(`➡ \`\`\`${item.qty}x ${item.name}\`\`\``);
   });
   linhas.push('');
-  linhas.push(`*Subtotal:* ${money(getCartTotal())}`);
+  if (observacoes) {
+    linhas.push(`Observação: (*${observacoes}*)`);
+    linhas.push('');
+  }
+  linhas.push(`💳 *${pagamento}*${pagamento === 'Dinheiro' && troco ? ` (troco para ${troco})` : ''}`);
   linhas.push('');
-  linhas.push(`*Cliente:* ${nome}`);
-  linhas.push(`*Telefone:* ${telefone}`);
-  linhas.push(`*Endereço:* ${rua} - ${bairro}`);
-  if (complemento) linhas.push(`*Complemento:* ${complemento}`);
-  if (referencia) linhas.push(`*Referência:* ${referencia}`);
-  linhas.push(`*Pagamento:* ${pagamento}${pagamento === 'Dinheiro' && troco ? ` (troco para ${troco})` : ''}`);
-  if (observacoes) linhas.push(`*Observações:* ${observacoes}`);
+  linhas.push(`🛵 *Delivery*`);
+  linhas.push(`🏠 ${endereco}`);
+  linhas.push('');
+  linhas.push(`Total: *${money(getCartTotal())}*`);
+  linhas.push('');
+  linhas.push(`Obrigado pela preferência, se precisar de algo é só chamar! 😉`);
 
   const mensagem = linhas.join('\n');
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
   window.location.href = url;
 });
-
 // ---------- inicial ----------
 syncCart();
 
