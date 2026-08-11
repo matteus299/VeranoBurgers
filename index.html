@@ -318,7 +318,7 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
   z-index: 40;
 }
 
-   .sheet {
+.sheet {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 50;
@@ -328,13 +328,13 @@ main { max-width: 720px; margin: 0 auto; padding: 0 16px; }
   border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 22px 22px 0 0;
-  height: 88vh;                 /* altura fixa */
+  height: 88vh;
   max-height: 88vh;
   display: flex;
   flex-direction: column;
   padding: 10px 18px calc(20px + var(--safe-bottom));
   box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
-  overflow: hidden;             /* impede que a sheet cresça */
+  overflow: hidden;
 }
    
 .sheet-handle {
@@ -942,12 +942,17 @@ function openSheet(sheet) {
   overlay.hidden = false;
   sheet.hidden = false;
   document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
 }
+
 function closeSheets() {
   overlay.hidden = true;
   cartSheet.hidden = true;
   checkoutSheet.hidden = true;
   document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
 }
 
 cartBar.addEventListener('click', () => openSheet(cartSheet));
