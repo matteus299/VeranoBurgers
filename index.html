@@ -817,7 +817,7 @@ function getCartTotal() {
 // ---------- steppers no cardápio ----------
 document.querySelectorAll('.stepper').forEach((stepper) => {
   const id = stepper.dataset.id;
-  const productEl = stepper.closest('[data-id]');
+const productEl = stepper.closest('article');
   const name = productEl.dataset.name;
   const price = parseFloat(productEl.dataset.price);
   const qtyEl = stepper.querySelector('.step-qty');
